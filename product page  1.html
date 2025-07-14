@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hyaluronic Acid Serum</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .left-column, .right-column {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .left-column img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 8px;
+    }
+
+    .right-column h1 {
+      margin-top: 0;
+    }
+
+    .stars {
+      color: gold;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .size-select button {
+      border: 2px solid #ff6b00;
+      padding: 5px 15px;
+      margin-right: 10px;
+      border-radius: 5px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .quantity {
+      margin: 15px 0;
+    }
+
+    .quantity input {
+      width: 40px;
+      text-align: center;
+    }
+
+    .add-to-bag {
+      background-color: #000;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 2px solid #ff6b00;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .description {
+      margin-top: 30px;
+    }
+
+    a.back-link {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      color: #555;
+    }
+
+    .price {
+  color: orange;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="left-column">
+      <img src="https://www.biovenebarcelona.com/cdn/shop/files/8436575090078_4.2_HYALURONICACID_BV-HYS18.jpg?v=1687631482&width=1100" alt="Hyaluronic Acid Serum">
+    </div>
+
+    <div class="right-column">
+      <h1>Hyaluronic Acid Serum</h1>
+      <p><em>Deep hydration serum for plump and glowing skin</em></p>
+
+
+      <div class="size-select">
+        <button>Mini</button>
+        <button>Full</button>
+      </div>
+
+      <div class="quantity">
+        Quantity: 
+        <button onclick="decrease()">-</button>
+        <input type="number" id="qty" value="1" min="1">
+        <button onclick="increase()">+</button>
+      </div>
+
+    <p class="price">Rs. 2550</p>
+
+
+      <div class="description">
+        <h3>Description</h3>
+        <p>
+          A hydrating serum formulated with hyaluronic acid to lock in moisture and boost skin’s natural glow. Lightweight, fast-absorbing,
+           and perfect for all skin types. <br>MINI SAVER PACK: 10mL = 200 drops. With daily 10drop usage, it will last 
+           upto 20 days <br>MINIMIZES OPEN PORES: The combination of 5% Niacinamide and 10% Vitamin C accelerates cell regeneration
+           and boosts collagen, thereby helping the skin to shed dead cell build-up from the surface and allowing new 
+           and healthy skin layers to take their place. This skin regeneration process also pushes out debris clogged
+           inside pores, ensuring no room for any bacterial infection like acne while also making them less visible and more
+        normal-sized. You and your skin can now confidently go 
+        </p>
+      </div>
+
+      <a href="index.html" class="back-link">← Back to Main Page</a>
+    </div>
+
+  </div>
+
+  <script>
+    function increase() {
+      var qty = document.getElementById("qty");
+      qty.value = parseInt(qty.value) + 1;
+    }
+
+    function decrease() {
+      var qty = document.getElementById("qty");
+      if (qty.value > 1) qty.value = parseInt(qty.value) - 1;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Skincare Product Gallery</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    .main-container {
+      width: 90%;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .image-box {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: #fff;
+      flex-direction: column;
+      transition: transform 0.2s;
+    }
+
+    .image-box:hover {
+      transform: scale(1.02);
+    }
+
+    .image-box .img-container img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .description {
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+      background-color: #fafafa;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      color: #333;
+      margin-top: 30px;
+    }
+
+    .page-wrapper {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+  <h1>Our Skincare Product Collection</h1>
+
+  <div class="main-container">
+    
+    <div class="image-box">
+      <div class="img-container">
+        <a href="product page  1.html">
+          <img src="https://www.biovenebarcelona.com/cdn/shop/files/8436575090078_4.2_HYALURONICACID_BV-HYS18.jpg?v=1687631482&width=1100" alt="Hyaluronic Acid">
+        </a>
+      </div>
+      <div class="description">
+        Hyaluronic Acid - Deep hydration for smooth, plump skin.
+      </div>
+    </div>
+
+    <div class="image-box">
+      <div class="img-container">
+        <a href="product page 2.html">
+          <img src="https://i.ebayimg.com/images/g/nVMAAOSwq2ZoLKw~/s-l1200.jpg" alt="Niacinamide Serum">
+        </a>
+      </div>
+      <div class="description">
+        Niacinamide + Zinc - Fights acne, improves texture & tone.
+      </div>
+    </div>
+
+    <div class="image-box">
+      <div class="img-container">
+        <a href="product page 3.html">
+          <img src="https://www.epharmacy.com.np/content/images/thumbs/65263dc3e0498d9868cd63aa_the-derma-co-2-salicylic-acid-face-serum-10ml.jpeg" alt="Salicylic Acid Serum">
+        </a>
+      </div>
+      <div class="description">
+        Salicylic Acid - Clears pores and prevents future breakouts.
+      </div>
+    </div>
+
+    <div class="image-box">
+      <div class="img-container">
+        <a href="product page 4.html">
+          <img src="https://the-apothecary.co.nz/wp-content/uploads/2015/08/salicylic-acid-gel-50ml.jpg" alt="Salicylic Acid Gel">
+        </a>
+      </div>
+      <div class="description">
+        Exfoliating Gel - Smoother skin with deep pore cleansing.
+      </div>
+    </div>
+
+    <div class="image-box">
+      <div class="img-container">
+
+
+        <a href="product page 5.html">
+
+
+          <img src="https://dr9wvh6oz7mzp.cloudfront.net/i/1eda749f312d5328f7c3d7c30443082f_ra,w380,h380_pa,w380,h380.jpg" 
+          alt="Acne Control Serum">
+        </a>
+
+
+      </div>
+      <div class="description">
+        Acne Control Serum - Reduces redness and controls oil.
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+
+</body>
+</html>
