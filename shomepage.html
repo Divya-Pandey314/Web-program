@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleep Tracker - Home</title>
+  <link href="homepage.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="greeting" id="greeting">Welcome back!</div>
+    <div class="prepare-btn" onclick="window.location.href='sleepanalysis.html'">Prepare for Sleep</div>
+    <div class="features">
+    <div class="feature-card">
+      <img src="https://img.icons8.com/ios-filled/50/6c5ce7/lotus.png" alt="Breath">
+      <p>Heart Rate</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://img.icons8.com/ios-filled/50/6c5ce7/lotus.png" alt="Dream Analysis">
+      <p>Breathe</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://img.icons8.com/ios-filled/50/6c5ce7/musical-notes.png" alt="Sleep Music">
+      <p>Sleep Music</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://st3.depositphotos.com/28990606/36123/v/450/depositphotos_361236642-stock-illustration-yoga-logo-design-stock-meditation.jpg" alt="Meditation">
+      <p>Meditation</p>
+    </div>
+  </div>
+
+  <!-- Mood Tracker -->
+  <div class="mood">
+    <h2>How do you feel today?</h2>
+    <div class="emoji-list">
+      <span class="emoji" onclick="saveMood('😊')">😊</span>
+      <span class="emoji" onclick="saveMood('😴')">😴</span>
+      <span class="emoji" onclick="saveMood('😔')">😔</span>
+      <span class="emoji" onclick="saveMood('😡')">😡</span>
+      <span class="emoji" onclick="saveMood('😍')">😍</span>
+    </div>
+  </div>
+
+  <!-- Story Section -->
+<div class="story-section">
+  <h3><i class="fas fa-book-reader"></i> Sleep Stories</h3>
+  <div class="story-cards">
+    <div class="story-card">
+      <img src="https://images.pexels.com/photos/356807/pexels-photo-356807.jpeg" alt="Story 1" style="width:158px;height:120px;">
+      <p>Peaceful Night</p>
+    </div>
+    <div class="story-card">
+      <img src="https://images.pexels.com/photos/356831/pexels-photo-356831.jpeg" alt="Story 2" style="width:158px;height:120px;">
+      <p>Dreamy Escape</p>
+    </div>
+    <div class="story-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJP0VHzE-YBoLRuLc0J66jXU9cB0_if3VxzA&s" alt="Story 3" style="width:158px;height:120px;">
+      <p>Relax & Sleep</p>
+    </div>
+    <div class="story-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkSFHcrl-4MpVu39_M_ZBU-SAUAfDxoFxmTg&s" alt="Story 3" style="width:158px;height:120px;">
+      <p>Quiet Night</p>
+    </div>
+  </div>
+</div>
+
+ 
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="shomepage.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/home.png"></a>
+    <a href="sleepanalysis.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/like.png"></a>
+    <a href="report.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/combo-chart.png"></a>
+    <a href="mepage.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/user.png"></a>
+  </div>
+
+ 
+
+  <!-- JavaScript -->
+  <script>
+    function updateTime() {
+      let now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes().toString().padStart(2, '0');
+
+
+      // Greeting logic
+      let greetingText = "";
+      if (hours < 12) greetingText = "Good Morning!";
+      else if (hours < 18) greetingText = "Good Afternoon!";
+      else greetingText = "Good Evening!";
+
+      document.getElementById("greeting").textContent = greetingText;
+      document.getElementById("time").textContent = now.toLocaleTimeString();
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+  </script>
+
+</body>
+</html>

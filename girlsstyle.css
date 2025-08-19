@@ -64,6 +64,34 @@ a {
   cursor: pointer;
 }
 
+
+
+    .hero {
+      position: relative;
+      background: url("https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9") no-repeat center center/cover;
+      height: 80vh; /* Adjust height */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4); /* dark overlay */
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    
+
+
 /* Section Common */
 section, .container {
   max-width: 1200px;
@@ -287,39 +315,30 @@ h1 {
 
 
 /* Footer */
-footer {
-  background: #e0e0e0;
-  color: #333;
-  padding: 40px 20px;
-  text-align: center;
-}
+    footer {
+      background-color: #111;
+      color: #ccc;
+      padding: 40px 0 20px;
+    }
+    footer a {
+      color: #ccc;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #fff;
+    }
+    .social-icons a img {
+      width: 35px;
+      height: 35px;
+    }
+    .footer-bottom {
+      border-top: 1px solid #333;
+      margin-top: 20px;
+      padding-top: 15px;
+      text-align: center;
+      color: #aaa;
+    }
 
-footer h3 {
-  font-size: 1rem;
-  margin-bottom: 10px;
-}
-
-footer ul {
-  list-style: none;
-  padding: 0;
-}
-
-footer ul li {
-  margin: 5px 0;
-}
-
-footer a {
-  color: #0f0714;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-
-footer p {
-  margin-top: 20px;
-  font-size: 0.12m;
-}
 
 /* Responsive */
 @media (max-width: 768px) {

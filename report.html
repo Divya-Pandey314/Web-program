@@ -1,0 +1,513 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleep Tracker Report</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #faf8fc; /* soft lavender-white */
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #ede7f6;
+      padding: 0.8rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    header button {
+      background: white;
+      border: 1px solid #d1c4e9;
+      border-radius: 20px;
+      padding: 0.5rem 1.2rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: #6a4bc7;
+      transition: all 0.3s ease;
+    }
+    header button.active {
+      background: #6a4bc7;
+      color: white;
+      box-shadow: 0 2px 6px rgba(106,75,199,0.4);
+    }
+
+    .container {
+      padding: 1rem;
+      max-width: 900px;
+      margin: auto;
+      padding-bottom: 80px; /* space for bottom nav */
+    }
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+      color: #5e35b1;
+      font-weight: 700;
+    }
+
+    /* --- Sleep Duration Box Styling --- */
+    .duration-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ede7f6, #ffffff);
+      box-shadow: 0 6px 18px rgba(106, 75, 199, 0.15);
+    }
+    .duration-left p {
+      margin: 0;
+      font-size: 1rem;
+      color: #444;
+    }
+    .duration-left .duration {
+      font-size: 2.4rem;
+      font-weight: bold;
+      color: #6a4bc7;
+      margin-top: 0.4rem;
+    }
+    .duration-right {
+      text-align: center;
+    }
+    .duration-right canvas {
+      width: 90px !important;
+      height: 90px !important;
+    }
+    .duration-score {
+      margin-top: -65px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #f57c00;
+      position: relative;
+    }
+
+    /* Sleep stage summary style */
+    .stages-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 1rem;
+    }
+    .stage-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .stage-box canvas {
+      width: 45px !important;
+      height: 45px !important;
+    }
+    .stage-info {
+      font-size: 0.9rem;
+    }
+    .stage-info strong {
+      display: block;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    /* Bedtime / Wake-up grid style */
+    .sleep-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .grid-box {
+      background: #ede7f6;
+      color: #333;
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(106,75,199,0.1);
+    }
+    .grid-box h3 {
+      margin: 0;
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+    .grid-box p {
+      margin: 0.4rem 0 0;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #6a4bc7;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ede7f6;
+      display: flex;
+      justify-content: space-around;
+      padding: 0.6rem 0;
+      border-top: 1px solid #d1c4e9;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.08);
+    }
+    .bottom-nav a {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #6a4bc7;
+      text-decoration: none;
+    }
+    .bottom-nav img {
+      width: 26px;
+      height: 26px;
+    }
+
+    /* Breathing Stability Section */
+.breathing-card h2 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: center;
+  color: #5e35b1;
+}
+
+.breathing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.breathing-box {
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: #fafafa;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+  opacity: 0.5;
+}
+
+.breathing-box h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.breathing-box p {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Stable Box Theme */
+.breathing-box.stable {
+  border-color: #43a047;
+  background: linear-gradient(135deg, #e8f5e9, #ffffff);
+  color: #2e7d32;
+}
+
+/* Not Stable Box Theme */
+.breathing-box.unstable {
+  border-color: #e53935;
+  background: linear-gradient(135deg, #ffebee, #ffffff);
+  color: #c62828;
+}
+
+/* Active State Highlight */
+.breathing-box.active {
+  opacity: 1;
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Header Tabs -->
+  <header>
+    <button class="active">Daily</button>
+  
+  </header>
+
+  <div class="container">
+    <!-- Sleep Duration (Upgraded Design) -->
+    <div class="card">
+      <h2>Sleep Duration</h2>
+      <div class="duration-card">
+        <div class="duration-left">
+          <p>11:00 PM - 06:30 AM</p>
+          <p class="duration">7h 30m</p>
+        </div>
+        <div class="duration-right">
+          <canvas id="durationChart"></canvas>
+          <div class="duration-score">85</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sleep Stages -->
+    <div class="card">
+      <h2>Sleep Stages</h2>
+      <div class="stages-grid">
+        <div class="stage-box">
+          <canvas id="deepChart"></canvas>
+          <div class="stage-info"><strong>33%</strong> Deep Sleep<br>1h 50m</div>
+        </div>
+        <div class="stage-box">
+          <canvas id="lightChart"></canvas>
+          <div class="stage-info"><strong>35%</strong> Light Sleep<br>2h 0m</div>
+        </div>
+        <div class="stage-box">
+          <canvas id="remChart"></canvas>
+          <div class="stage-info"><strong>19%</strong> REM<br>1h 3m</div>
+        </div>
+        <div class="stage-box">
+          <canvas id="awakeChart"></canvas>
+          <div class="stage-info"><strong>13%</strong> Awake<br>44m</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Sleep Recording Section -->
+        <!-- Sleep Recording Section -->
+    <div class="card">
+      <h2>Sleep Recording</h2>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <div>
+          <p style="margin:0; font-weight:500; color:#666;">Recording Duration</p>
+          <p id="recordDuration" style="margin:0; font-size:1.8rem; font-weight:700; color:#5e35b1;">00:00:00</p>
+        </div>
+        <button id="recordBtn" style="
+          background:linear-gradient(135deg, #9575cd, #7e57c2);
+          color:white;
+          border:none;
+          border-radius:12px;
+          padding:0.8rem 1.5rem;
+          font-size:1rem;
+          font-weight:600;
+          cursor:pointer;
+          box-shadow:0 4px 12px rgba(126,87,194,0.3);
+          transition:all 0.3s ease;">
+          ⏺ Start
+        </button>
+      </div>
+
+      <!-- Sound Detection List -->
+      <div style="border-top:1px solid #eee; padding-top:1rem;">
+        <h3 style="font-size:1rem; color:#5e35b1; margin-bottom:0.8rem;">Detected Sounds</h3>
+        <ul style="list-style:none; padding:0; margin:0; font-size:0.95rem; color:#444;">
+          <li style="padding:0.4rem 0; display:flex; justify-content:space-between; border-bottom:1px solid #f3f3f3;">
+            Snoring <span id="snoreCount" style="font-weight:600; color:#6a4bc7;">0</span>
+          </li>
+          <li style="padding:0.4rem 0; display:flex; justify-content:space-between; border-bottom:1px solid #f3f3f3;">
+            Coughing <span id="coughCount" style="font-weight:600; color:#6a4bc7;">0</span>
+          </li>
+          <li style="padding:0.4rem 0; display:flex; justify-content:space-between; border-bottom:1px solid #f3f3f3;">
+            Footsteps <span id="stepCount" style="font-weight:600; color:#6a4bc7;">0</span>
+          </li>
+          <li style="padding:0.4rem 0; display:flex; justify-content:space-between; border-bottom:1px solid #f3f3f3;">
+            Teeth Grinding <span id="grindCount" style="font-weight:600; color:#6a4bc7;">0</span>
+          </li>
+          <li style="padding:0.4rem 0; display:flex; justify-content:space-between;">
+            Other Noise <span id="noiseCount" style="font-weight:600; color:#6a4bc7;">0</span>
+          </li>
+        </ul>
+      </div>
+
+    <!-- Bedtime / Wake-up summary -->
+    <div class="card">
+      <h2>Sleep Summary</h2>
+      <div class="sleep-grid">
+        <div class="grid-box">
+          <h3>Bedtime</h3>
+          <p>06:00 AM</p>
+        </div>
+        <div class="grid-box">
+          <h3>Wake-up time</h3>
+          <p>06:30 AM</p>
+        </div>
+        <div class="grid-box">
+          <h3>Awake</h3>
+          <p>24M</p>
+        </div>
+        <div class="grid-box">
+          <h3>REM</h3>
+          <p>5M</p>
+        </div>
+        <div class="grid-box">
+          <h3>Deep</h3>
+          <p>0M</p>
+        </div>
+        <div class="grid-box">
+          <h3>Light</h3>
+          <p>0M</p>
+        </div>
+        <div class="grid-box">
+          <h3>Not detected</h3>
+          <p>0M</p>
+        </div>
+        <div class="grid-box">
+          <h3>Time in bed</h3>
+          <p>30M</p>
+        </div>
+      </div>
+    </div>
+
+
+
+      <!-- Breathing Stability Report -->
+<div class="card breathing-card">
+  <h2>Breathing Stability</h2>
+
+  <div class="breathing-grid">
+    
+    <!-- Stable Box -->
+    <div id="stableBox" class="breathing-box stable">
+      <h3>✅ Stable</h3>
+      <p>Normal breathing detected</p>
+    </div>
+    
+    <!-- Not Stable Box -->
+    <div id="unstableBox" class="breathing-box unstable">
+      <h3>⚠️ Not Stable</h3>
+      <p>Irregular breathing detected</p>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+         
+
+  <!-- Bottom Navigation -->
+   <div class="bottom-nav">
+    <a href="shomepage.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/home.png"></a>
+    <a href="sleepanalysis.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/like.png"></a>
+    <a href="report.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/combo-chart.png"></a>
+    <a href="mepage.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/user.png"></a>
+  </div>
+
+  <script>
+    // Function for pie chart (single percentage)
+    function createPieChart(id, percent, color) {
+      new Chart(document.getElementById(id), {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [percent, 100 - percent],
+            backgroundColor: [color, '#eee']
+          }]
+        },
+        options: {
+          cutout: '70%',
+          plugins: { legend: { display: false } },
+          responsive: false
+        }
+      });
+    }
+
+    // Create charts for sleep stages
+    createPieChart('deepChart', 33, '#4527a0');
+    createPieChart('lightChart', 35, '#26a69a');
+    createPieChart('remChart', 19, '#ef6c00');
+    createPieChart('awakeChart', 13, '#fbc02d');
+
+    // Circular progress chart for sleep duration score
+    new Chart(document.getElementById('durationChart'), {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: [85, 15], // score out of 100
+          backgroundColor: ['#6a4bc7', '#e0d7f8']
+        }]
+      },
+      options: {
+        cutout: '75%',
+        plugins: { legend: { display: false } },
+        responsive: false
+      }
+    });
+
+    // Recording logic
+    let isRecording = false;
+    let seconds = 0;
+    let timer;
+    
+    const recordBtn = document.getElementById("recordBtn");
+    const recordDuration = document.getElementById("recordDuration");
+
+    function formatTime(sec) {
+      let h = String(Math.floor(sec / 3600)).padStart(2, '0');
+      let m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
+      let s = String(sec % 60).padStart(2, '0');
+      return `${h}:${m}:${s}`;
+    }
+
+    recordBtn.addEventListener("click", () => {
+      if (!isRecording) {
+        isRecording = true;
+        recordBtn.textContent = "⏹ Stop";
+        recordBtn.style.background = "linear-gradient(135deg, #ef5350, #e53935)";
+        seconds = 0;
+        timer = setInterval(() => {
+          seconds++;
+          recordDuration.textContent = formatTime(seconds);
+
+          // Demo sound detection simulation
+          if (Math.random() < 0.05) document.getElementById("snoreCount").textContent++;
+          if (Math.random() < 0.03) document.getElementById("coughCount").textContent++;
+          if (Math.random() < 0.02) document.getElementById("stepCount").textContent++;
+          if (Math.random() < 0.01) document.getElementById("grindCount").textContent++;
+          if (Math.random() < 0.04) document.getElementById("noiseCount").textContent++;
+        }, 1000);
+      } else {
+        isRecording = false;
+        recordBtn.textContent = "⏺ Start";
+        recordBtn.style.background = "linear-gradient(135deg, #9575cd, #7e57c2)";
+        clearInterval(timer);
+      }
+    });
+
+    // Function to update which box is active
+function checkBreathingStability() {
+  const snore = parseInt(document.getElementById("snoreCount").textContent);
+  const cough = parseInt(document.getElementById("coughCount").textContent);
+
+  const stableBox = document.getElementById("stableBox");
+  const unstableBox = document.getElementById("unstableBox");
+
+  if (snore > 5 || cough > 3) {
+    unstableBox.classList.add("active");
+    stableBox.classList.remove("active");
+  } else {
+    stableBox.classList.add("active");
+    unstableBox.classList.remove("active");
+  }
+}
+setInterval(checkBreathingStability, 1000);
+
+
+
+ 
+
+
+
+
+  </script>
+
+</body>
+</html>

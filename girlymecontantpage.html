@@ -29,7 +29,7 @@
   </style>
 </head>
 <body>
-
+    <script type="module" src="contact.js"></script>
 
 <!-- Header / Navbar -->
 <header class="header">
@@ -97,7 +97,12 @@
                 <label class="form-label">Message</label>
                 <textarea class="form-control" rows="5" placeholder="Write your message..." required></textarea>
               </div>
-              <button type="submit" class="purple">
+              <button type="button" onclick="writeUserData(
+                  document.getElementById('name').value,
+                  document.getElementById('email').value,
+                  document.getElementById('subject').value,
+                  document.getElementById('message').value
+              )" class="purple">
                  <i class="fa fa-paper-plane" style="color: purple;"></i> Send Message
                 </button>
             </form>

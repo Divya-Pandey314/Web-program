@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Me - Profile & Settings</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #faf8fc;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      padding-bottom: 80px; /* space for bottom nav */
+    }
+
+    header {
+      background: #ede7f6;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #5e35b1;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 1.5rem auto;
+      padding: 1rem;
+    }
+
+    .profile-card {
+      text-align: center;
+      background: white;
+      padding: 2rem 1rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 1.5rem;
+    }
+    .profile-card img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid #d1c4e9;
+      margin-bottom: 0.8rem;
+    }
+    .profile-card h2 {
+      margin: 0;
+      font-size: 1.3rem;
+      color: #6a4bc7;
+    }
+    .profile-card p {
+      margin: 0.3rem 0 0;
+      color: #777;
+    }
+
+    .settings-section {
+      background: white;
+      padding: 1rem;
+      border-radius: 18px;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .settings-section h3 {
+      margin-top: 0;
+      color: #5e35b1;
+      font-size: 1.1rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid #f1f1f1;
+      cursor: pointer;
+    }
+    .setting-item:last-child {
+      border-bottom: none;
+    }
+    .setting-item span {
+      color: #333;
+      font-size: 1rem;
+    }
+    .setting-item button {
+      background: #6a4bc7;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ede7f6;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.08);
+    }
+    .bottom-nav a {
+      text-align: center;
+      text-decoration: none;
+      color: #5e35b1;
+      font-size: 0.85rem;
+    }
+    .bottom-nav img {
+      width: 26px;
+      height: 26px;
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Days with Us <br>
+      0
+
+    </h1>
+  </header>
+
+  <div class="container">
+    <!-- Profile Card -->
+    <div class="profile-card">
+      <img src="https://i.pinimg.com/236x/dd/f0/11/ddf0110aa19f445687b737679eec9cb2.jpg" alt="Profile Picture">
+      <h2>Divya Pandey</h2>
+      
+    </div>
+
+    <!-- Settings Section -->
+    <div class="settings-section">
+      <h3>Settings</h3>
+      <div class="setting-item"><span>Alarm Settings</span> <button>Set</button></div>
+      <div class="setting-item"><span>Sleep Reularity </span> <button>View</button></div>
+      <div class="setting-item"><span>Sleep Reminder</span> <button>Set</button></div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Sleep Record</h3>
+      <div class="setting-item"><span>Manage Audios</span> <button>Set</button></div>
+      <div class="setting-item"><span>Favorite Recording</span> <button>Set</button></div>
+      <div class="setting-item"><span>Save Sleep Sounds</span> <button>Manage</button></div>
+    </div>
+
+    <div class="settings-section">
+      <h3>General Settings</h3>
+      <div class="setting-item"><span>Notifications</span> </div>
+      <div class="setting-item"><span>Share with Friends</span> </div>
+      <div class="setting-item"><span>Contact us</span> </div>
+      <div class="setting-item"><span>Help & Support</span> </div>
+      <div class="setting-item"><span>Privacy Policy</span> </div>
+      <div class="setting-item"><span>Cancel Subscription</span> <button>Logout</button></div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+   <div class="bottom-nav">
+    <a href="shomepage.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/home.png"></a>
+    <a href="sleepanalysis.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/like.png"></a>
+    <a href="report.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/combo-chart.png"></a>
+    <a href="mepage.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/user.png"></a>
+  </div>
+
+</body>
+</html>

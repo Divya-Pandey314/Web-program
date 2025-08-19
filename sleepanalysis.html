@@ -1,0 +1,254 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleep Monitor</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #6c5ce7, #a29bfe); 
+      overflow: hidden;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 40px 30px;
+      border-radius: 25px;
+      width: 90%;
+      max-width: 420px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+      animation: fadeIn 1s ease;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 25px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.18);
+      padding: 15px 20px;
+      border-radius: 18px;
+      margin: 15px 0;
+      font-size: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: inset 0 2px 8px rgba(255,255,255,0.1),
+                  0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    .info-card span {
+      font-weight: bold;
+      font-size: 20px;
+      color: #f5f5f5;
+    }
+
+    /* Redesigned dropdown and number input */
+    .styled-select, .styled-input {
+      flex: 1;
+      margin-left: 10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: none;
+      font-size: 16px;
+      font-family: inherit;
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+      outline: none;
+      appearance: none;
+      transition: 0.3s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15) inset;
+    }
+    .styled-select:hover, .styled-input:hover {
+      background: rgba(255,255,255,0.35);
+    }
+    option { color: black; }
+
+    /* Timer input group */
+    .timer-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+    .timer-label {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    button {
+      width: 100%;
+      cursor: pointer;
+      background: linear-gradient(to right, #6c5ce7, #a29bfe);
+      color: white;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    button:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    button.stop-btn {
+      background: linear-gradient(to right, #6c5ce7, #a29bfe);
+    }
+
+    audio { display: none; }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fafafa;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-top: 1px solid #e0e0e0;
+      box-shadow: 0 -3px 8px rgba(0,0,0,0.08);
+    }
+    .bottom-nav a {
+      text-align: center;
+      text-decoration: none;
+      color: #6c5ce7;
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .bottom-nav img {
+      width: 26px;
+      height: 26px;
+      margin-bottom: 2px;
+      transition: 0.3s;
+    }
+    .bottom-nav a:hover img {
+      transform: scale(1.1);
+      filter: drop-shadow(0 2px 4px rgba(108,92,231,0.4));
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sleep Monitor</h1>
+
+    <div class="info-card">⏱ Duration <span id="sleep-timer">00:00:00</span></div>
+    <div class="info-card">🎙 Noise <span id="noise">0</span> dB</div>
+
+    <!-- Redesigned Sound selector -->
+    <div class="info-card">
+       Sound
+      <select id="soundSelect" class="styled-select">
+        <option value="rain.mp3">🌧 Rain</option>
+        <option value="waves.mp3">🌊 Ocean Waves</option>
+        <option value="white.mp3">🎵 White Noise</option>
+      </select>
+    </div>
+
+    <!-- Redesigned Timer input -->
+    <div class="info-card">
+       Timer
+      <div class="timer-group">
+        <input type="number" id="timerInput" min="1" max="180" value="30" class="styled-input">
+        <span class="timer-label">hours</span>
+      </div>
+    </div>
+
+    <button onclick="startSleep()">Start Sleep</button>
+    <button onclick="stopSleep()" class="stop-btn">Stop</button>
+
+    <audio id="sleepSound" loop></audio>
+  </div>
+
+  <!-- Bottom Navigation -->
+   <div class="bottom-nav">
+    <a href="shomepage.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/home.png"><span>Home</span></a>
+    <a href="sleepanalysis.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/like.png"><span>Analysis</span></a>
+    <a href="report.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/combo-chart.png"><span>Report</span></a>
+    <a href="mepage.html"><img src="https://img.icons8.com/ios-filled/50/6c5ce7/user.png"><span>Profile</span></a>
+  </div>
+
+  <script>
+    let startTime, timerInterval, audioCtx, analyser, micStream;
+
+    function formatTime(ms) {
+      let totalSeconds = Math.floor(ms / 1000);
+      let h = String(Math.floor(totalSeconds / 3600)).padStart(2,'0');
+      let m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2,'0');
+      let s = String(totalSeconds % 60).padStart(2,'0');
+      return `${h}:${m}:${s}`;
+    }
+
+    function startSleep() {
+      startTime = Date.now();
+      timerInterval = setInterval(() => {
+        document.getElementById("sleep-timer").textContent = formatTime(Date.now() - startTime);
+      }, 1000);
+
+      let sound = document.getElementById("soundSelect").value;
+      let audio = document.getElementById("sleepSound");
+      audio.src = sound;
+      audio.play();
+
+      let minutes = document.getElementById("timerInput").value;
+      setTimeout(() => audio.pause(), minutes * 60000);
+
+      if (!navigator.mediaDevices) return alert("Microphone not supported!");
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+        micStream = stream;
+        audioCtx = new AudioContext();
+        analyser = audioCtx.createAnalyser();
+        let source = audioCtx.createMediaStreamSource(stream);
+        source.connect(analyser);
+
+        let dataArray = new Uint8Array(analyser.fftSize);
+        function updateNoise() {
+          analyser.getByteFrequencyData(dataArray);
+          let values = dataArray.reduce((a,b) => a+b, 0) / dataArray.length;
+          let db = Math.round(values);
+          document.getElementById("noise").textContent = db;
+          requestAnimationFrame(updateNoise);
+        }
+        updateNoise();
+      });
+    }
+
+    function stopSleep() {
+      clearInterval(timerInterval);
+      document.getElementById("sleep-timer").textContent = "00:00:00";
+
+      let audio = document.getElementById("sleepSound");
+      audio.pause();
+      audio.currentTime = 0;
+
+      if (micStream) {
+        micStream.getTracks().forEach(track => track.stop());
+      }
+    }
+  </script>
+</body>
+</html>
